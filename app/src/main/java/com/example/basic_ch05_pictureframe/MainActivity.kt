@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     // 이미지 뷰들을 리스트 형식으로 불러온다.
     private val imageViewList: List<ImageView> by lazy {
         mutableListOf<ImageView>().apply {
+            // layout 파일들의 이미지뷰들을 하나씩 추가
             add(mainBinding.imageView11)
             add(mainBinding.imageView12)
             add(mainBinding.imageView13)
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // 저장소에서 불러온 사진의 Uri를 저장할 리스트
+    // 저장소에서 불러온 사진의 Uri를 저장할 리스트 , 빈 리스트
     private val imageUriList: MutableList<Uri> = mutableListOf()
 
 
@@ -77,6 +78,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // 사진 액자 모드 시작
     private fun initStartPhotoFrameModeBtn() {
 
         mainBinding.startPhotoFrameModeBtn.setOnClickListener {
@@ -92,6 +94,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    // 저장소 접근에 대한 권한 팝업을 불러오는 함수
     private fun showPermissionContextPopup() {
         AlertDialog.Builder(this)
             .setTitle("권한이 필요합니다.")
@@ -104,12 +107,14 @@ class MainActivity : AppCompatActivity() {
             })
     }
 
+    // 권한 허용에 대한 결과 분류
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        // requestCode는 권한 별 부여된 코드 번호
         when (requestCode) {
             1000 -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -127,7 +132,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // 컨텐츠 프로바이더에서 스토리지 엑세스 프레임워크 기능 사용
+    // Contents Provider 에서 Storage Access Framework 기능 사용
     private fun navigatePhotos() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
@@ -135,6 +140,7 @@ class MainActivity : AppCompatActivity() {
         startActivityForResult(intent,2000)
     }
 
+    //
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
